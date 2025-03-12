@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Bridge for the Disconnected</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            background-color: #3B82F6;
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .dropdown {
+            padding: 10px;
+            font-size: 16px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        #answer {
+            font-size: 18px;
+            color: #333;
+            margin-top: 10px;
+        }
+        .chat-container {
+            width: 100%;
+            height: 500px;
+            margin-top: 20px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #webchat .bpWebchat {
+            position: unset;
+            width: 100%;
+            height: 100%;
+            max-height: 100%;
+            max-width: 100%;
+        }
+        #webchat .bpFab {
+            display: none;
+        }
+    </style>
+    <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
+</head>
+<body>
+    <h1>Tech Bridge for the Disconnected</h1>
+    
+    <div class="container">
+        <label for="issues">Select an Issue:</label>
+        <select id="issues" class="dropdown" onchange="showAnswer()">
+    		<option value="">-- Choose an issue --</option>
+    		<option value="internet">No Internet Connection</option>
+    		<option value="slow">Slow Device Performance</option>
+    		<option value="battery">Battery Draining Quickly</option>
+    		<option value="wifi">WiFi Keeps Disconnecting</option>
+    		<option value="software">Software Not Responding</option>
+	</select>
+        
+        <p id="answer"></p>
+    </div>
+    
+    <div class="container chat-container">
+        <div id="webchat" style="width: 100%; height: 100%;"></div>
+    </div>
+    
+    <script>
+        function showAnswer() {
+    		let answers = {
+        		internet: "Try restarting your router or checking with your ISP.",
+        		slow: "Close unused applications and clear cache to speed up your device.",
+        		battery: "Reduce screen brightness, close background apps, and disable location services.",
+       		 	wifi: "Forget the network and reconnect, or restart your router.",
+       	 	software: "Try updating or reinstalling the software, and restart your device."
+   	};
+    let issue = document.getElementById("issues").value;
+    document.getElementById("answer").textContent = answers[issue] || "";
+}
+        
+        window.botpress.on("webchat:ready", () => {
+            window.botpress.open();
+        });
+        window.botpress.init({
+            "botId": "f3cfef8b-6dd7-47c1-9830-3ec626ec121e",
+            "configuration": {
+                "website": {},
+                "email": {},
+                "phone": {},
+                "termsOfService": {},
+                "privacyPolicy": {},
+                "color": "#3B82F6",
+                "variant": "solid",
+                "themeMode": "light",
+                "fontFamily": "inter",
+                "radius": 1
+            },
+            "clientId": "95ab091e-af9e-4efb-beab-b3ed5372d25d",
+            "selector": "#webchat"
+        });
+    </script>
+</body>
+</html>
