@@ -26,6 +26,48 @@
             padding: 20px;
             margin: 0;
         }
+        .logo {
+            width: 150px;
+            height: auto;
+            margin: 10px;
+        }
+        /* Tab Style */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            background-color: #3B82F6;
+            padding: 10px;
+        }
+        .tab-button {
+            background-color: transparent;
+            border: 2px solid #fff;
+            padding: 10px 20px;
+            margin: 0 10px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .tab-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        .tab-button.active {
+            background-color: white;
+            color: #3B82F6;
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .tab-content.active {
+            display: block;
+        }
         .container {
             max-width: 800px;
             margin: 30px auto;
@@ -45,11 +87,6 @@
             border-radius: 5px;
             width: 100%;
             max-width: 400px;
-        }
-        #answer {
-            font-size: 18px;
-            color: #333;
-            margin-top: 10px;
         }
         .chat-container {
             width: 100%;
@@ -117,52 +154,59 @@
     <script src="https://cdn.botpress.cloud/webchat/v2.3/inject.js"></script>
 </head>
 <body>
-    <h1>Tech Bridge for the Disconnected</h1>
-    
-    <!-- Combined FAQ and Select an Issue -->
-    <div class="container">
-        <!-- FAQ Details -->
-        <details>
-            <summary>How do I fix a slow device?</summary>
-            <p>Close unused applications and clear cache to speed up your device.</p>
-        </details>
-        <details>
-            <summary>Why does my WiFi keep disconnecting?</summary>
-            <p>Forget the network and reconnect, or restart your router.</p>
-        </details>
-        <details>
-            <summary>What should I do if my battery drains quickly?</summary>
-            <p>Reduce screen brightness, close background apps, and disable location services.</p>
-        </details>
-        <details>
-            <summary>How can I fix software that's not responding?</summary>
-            <p>Try updating or reinstalling the software, and restart your device.</p>
-        </details>
-        <details>
-            <summary>What should I do if I have no internet connection?</summary>
-            <p>Try restarting your router or checking with your ISP.</p>
-        </details>
+    <h1>
+        <img src="logo.png" alt="Tech Bridge Logo" class="logo">
+        Tech Bridge for the Disconnected
+    </h1>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs">
+        <button class="tab-button active" onclick="showTab('faq')">FAQ</button>
+        <button class="tab-button" onclick="showTab('about')">About Us</button>
+        <button class="tab-button" onclick="showTab('chatbot')">Chatbot</button>
     </div>
 
-    <!-- Feedback Form -->
-    <div class="container">
-        <h2>Feedback</h2>
-        <form id="feedbackForm">
-            <textarea id="feedback" placeholder="Your feedback..." class="dropdown" rows="4"></textarea>
-            <button type="submit" class="dropdown">Submit</button>
-        </form>
+    <!-- Tab Contents -->
+    <div class="tab-content active" id="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="container">
+            <details>
+                <summary>How do I fix a slow device?</summary>
+                <p>Close unused applications and clear cache to speed up your device.</p>
+            </details>
+            <details>
+                <summary>Why does my WiFi keep disconnecting?</summary>
+                <p>Forget the network and reconnect, or restart your router.</p>
+            </details>
+            <details>
+                <summary>What should I do if my battery drains quickly?</summary>
+                <p>Reduce screen brightness, close background apps, and disable location services.</p>
+            </details>
+            <details>
+                <summary>How can I fix software that's not responding?</summary>
+                <p>Try updating or reinstalling the software, and restart your device.</p>
+            </details>
+            <details>
+                <summary>What should I do if I have no internet connection?</summary>
+                <p>Try restarting your router or checking with your ISP.</p>
+            </details>
+        </div>
     </div>
 
-    <!-- Dark Mode Toggle -->
-    <div class="container">
-        <button id="themeToggle" class="dropdown">Toggle Dark Mode</button>
+    <div class="tab-content" id="about">
+        <h2>About Us</h2>
+        <div class="container">
+            <p>We are a group of students from Hericks High School, and our goal is to serve our community. This website is the vehicle through which we serve, designed to help those struggling to keep up with the ever-evolving world of technology. We understand how difficult it is to stay up-to-date, especially for seniors and individuals with visual impairments. Our story began when one of our group members visited a relative in the hospital. During their conversation, the relative expressed her biggest issue: the inability to connect with her family. This inspired us as a group to develop a tool that could help anyone meet their needs. We strive to help and serve in ways that improve our community and the world at large.</p>
+        </div>
     </div>
 
-    <!-- Chatbot Container -->
-    <div class="container">
-        <p class="mobile-notice">Mobile Users: Please exit the chatbot to scroll up and down!</p>
-        <div class="chat-container">
-            <div id="webchat" style="width: 100%; height: 100%;"></div>
+    <div class="tab-content" id="chatbot">
+        <h2>Chatbot</h2>
+        <div class="container">
+            <p class="mobile-notice">Mobile Users: Please exit the chatbot to scroll up and down!</p>
+            <div class="chat-container">
+                <div id="webchat" style="width: 100%; height: 100%;"></div>
+            </div>
         </div>
     </div>
 
@@ -171,30 +215,20 @@
 
     <!-- Scripts -->
     <script>
-        // Function for the dropdown menu
-        function showAnswer() {
-            let answers = {
-                internet: "Try restarting your router or checking with your ISP.",
-                slow: "Close unused applications and clear cache to speed up your device.",
-                battery: "Reduce screen brightness, close background apps, and disable location services.",
-                wifi: "Forget the network and reconnect, or restart your router.",
-                software: "Try updating or reinstalling the software, and restart your device."
-            };
-            let issue = document.getElementById("issues").value;
-            document.getElementById("answer").textContent = answers[issue] || "";
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-button');
+            
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
         }
-
-        // Feedback Form Submission
-        document.getElementById("feedbackForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            alert("Thank you for your feedback!");
-        });
-
-        // Dark Mode Toggle
-        const themeToggle = document.getElementById("themeToggle");
-        themeToggle.addEventListener("click", () => {
-            document.body.classList.toggle("dark-mode");
-        });
 
         // Chatbot Toggle Button
         const chatbotToggle = document.getElementById("chatbotToggle");
@@ -203,13 +237,6 @@
         });
 
         // Initialize Botpress
-        console.log("Initializing Botpress...");
-        window.botpress.on("webchat:ready", () => {
-            console.log("Botpress is ready!");
-            setTimeout(() => {
-                window.botpress.open(); // Open the chatbot after a short delay
-            }, 1000); // 1-second delay
-        });
         window.botpress.init({
           "botId": "d86f2e7d-be1d-40f5-a8bd-4c75c96ae22c",
           "configuration": {
@@ -233,6 +260,6 @@
   "clientId": "36fc36e6-f791-4b02-8086-58654242f322",
   "selector": "#webchat"
 });
-</script>
+    </script>
 </body>
 </html>
